@@ -21,6 +21,11 @@
             Save
         </button>
         <div class="mt-4">
+            <label for="company_description_translation" class="block text-gray-700 font-bold mb-2">Translated Company Description</label>
+            <textarea id="company_description_translation" x-model="company_description_translation" rows="4"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+        <div class="mt-4">
             <h2 class="font-bold mb-2">Response</h2>
             <template x-if="response">
                 <p x-text="response.choices[0].message.content"></p>
@@ -29,11 +34,6 @@
                     <pre class="p-4 text-sm"><code x-text="response"></code></pre>
                 </details>
             </template>
-        </div>
-        <div class="mt-4">
-            <label for="company_description_translation" class="block text-gray-700 font-bold mb-2">Translated Company Description</label>
-            <textarea id="company_description_translation" x-model="company_description_translation" rows="4"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
         </div>
         <div class="mt-4">
             <details>
