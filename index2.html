@@ -89,11 +89,13 @@
                         5. You MUST only use double straight quotation marks (") for quotations.  
                     `;
                     const user_prompt = `
+                      <input>
                         <company_description>
                         ${this.company_description}
                         </company_description>
                         Translate the text to ${this.language_target} while following ALL rules above.
                         Use JSON format with the keys "company_description".
+                      </input>
                         Also, detect the language of the company description as ISO 639-2 code.
                         Use JSON format with the keys "company_description" and "language".
                     `;
