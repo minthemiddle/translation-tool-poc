@@ -99,6 +99,7 @@
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${this.apiKey}`,
+                            'X-Title': 'translation_tool',
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
