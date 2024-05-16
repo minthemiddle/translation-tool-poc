@@ -31,6 +31,11 @@
             </template>
         </div>
         <div class="mt-4">
+            <label for="company_description_translation" class="block text-gray-700 font-bold mb-2">Translated Company Description</label>
+            <textarea id="company_description_translation" x-model="company_description_translation" rows="4"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+        <div class="mt-4">
             <details>
                 <summary>Settings</summary>
                 <label for="model" class="mt-2 block text-gray-700 font-bold mb-2">Model</label>
@@ -55,6 +60,7 @@
                 apiKey: '',
                 model: '',
                 company_description: '',
+                company_description_translation: '',
                 response: null,
                 loadFromLocalStorage() {
                     this.apiKey = localStorage.getItem('apiKey') || '';
@@ -95,6 +101,12 @@
                         })
                     });
                     this.response = await response.json();
+                    try {
+                        const parsedResponse = JSON.parse(this.response.choices[0].message.content);
+                        this.company_description_translation = parsedResponse.company_description;
+                    } catch (error) {
+                        console.error('Error parsing response:', error);
+                    }
                 }
             }
         }
