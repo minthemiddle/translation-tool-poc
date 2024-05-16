@@ -26,14 +26,12 @@
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
         </div>
         <div class="mt-4">
-            <h2 class="font-bold mb-2">Response</h2>
-            <template x-if="response">
+            <details>
+                <summary>Show Response</summary>
+                <template x-if="response">
                 <p x-text="response.choices[0].message.content"></p>
-                <details class="bg-white shadow overflow-auto border rounded">
-                    <summary class="px-4 py-2 cursor-pointer">View Response</summary>
-                    <pre class="p-4 text-sm"><code x-text="response"></code></pre>
-                </details>
-            </template>
+                </template>
+            </details>            
         </div>
         <div class="mt-4">
             <details>
