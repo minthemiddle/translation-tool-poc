@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body class="">
+    <div x-data="app()" x-init="loadFromLocalStorage()" class="max-w-3xl mx-auto p-8">
+        <div class="mt-8">
+            <label for="prompt" class="block text-gray-700 font-bold mb-2">Company description</label>
+            <textarea id="prompt" x-model="company_description" rows="4"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+        <button @click="savePrompt()"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+            Save
+        </button>
+        <div class="mt-4">
+            <h2 class="font-bold mb-2">Response</h2>
+            <template x-if="response">
+                <p x-text="response.choices[0].message.content"></p>
+                <details class="bg-white shadow overflow-auto border rounded">
+                    <summary class="px-4 py-2 cursor-pointer">View Response</summary>
+                    <pre class="p-4 text-sm"><code x-text="response"></code></pre>
+                </details>
+            </template>
+        </div>
+        <div class="mt-4">
+            <details>
+                <summary>Settings</summary>
+                <label for="model" class="mt-2 block text-gray-700 font-bold mb-2">Model</label>
+                <input type="text" id="model" x-model="model"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <label for="apiKey" class="mt-2 block text-gray-700 font-bold mb-2">API Key</label>
+                <div class="">
+                    <input type="text" id="apiKey" x-model="apiKey"
+                        class="text-xs shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <button @click="saveToLocalStorage()"
+                    class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Update
+                </button>
+            </details>
+        </div>
+    </div>
+
+    <script>
+        function app() {
+            return {
+                apiKey: '',
+                model: '',
+                company_description: '',
+                response: null,
+                loadFromLocalStorage() {
+                    this.apiKey = localStorage.getItem('apiKey') || '';
+                    this.model = localStorage.getItem('model') || '';
+                },
+                saveToLocalStorage() {
+                    localStorage.setItem('apiKey', this.apiKey);
+                    localStorage.setItem('model', this.model);
+                },
+                async savePrompt() {
+                    const system_prompt = `
+                        You are a helpful translator for a B2B e-commerce platform. Your task is to translate the following text while adhering to the following rules:
+                        
+                        1. Make the translation sound as natural as possible.
+                        2. Pay attention to nuance.
+                        3. Never translate terms that are enclosed in double straight quotation marks ("), even if the terms contain words that could be translated.  For example, if the original text contains "Hutversand Qualität", the translation must contain "Hutversand Qualität".
+                        4. You MUST NEVER translate any occurances of the <company_name> passed by the user.
+                        5. You MUST only use double straight quotation marks (") for quotations.  
+                    `;
+                    const user_prompt = `
+                        <company_description>
+                        ${this.company_description}
+                        </company_description>
+                        Translate the text from German to English while following ALL rules above.
+                        Use JSON format with the keys "company_description".
+                    `;
+                    console.log(user_prompt);
+                    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${this.apiKey}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: this.model,
+                            temperature: 0,
+                            messages: [{ role: 'system', content: system_prompt }, { role: 'user', content: user_prompt }]
+                        })
+                    });
+                    this.response = await response.json();
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
