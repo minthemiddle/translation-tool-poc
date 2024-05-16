@@ -1,3 +1,10 @@
+## 2405162152
+
+Turns out that Haiku runs into problems with language detection as soon as there are some words in other languages in it.
+Example: "Compania QSW QUALITÄTS SERVICE WELZBACHER GMBH, este o societate Prestatar de servicii, creată în anul 2009, care își desfășoară activitatea în domeniul Testarea produselor si a materialelor. De asemenea, activează în aceeași măsură și în domeniile Quality test, Reworking, Sorting, quality control, Checking, Industrial service, Labelling, Assembly, și Quality service. Are sediul în Aschaffenburg, Germania."
+
+Now, it will think it's German (despite being Romanian with a German company name).
+
 ## 2405161844
 
 With Claude Haiku, you don't seem to need a source language.
