@@ -70,6 +70,25 @@
         </div>
     </div>
 
+    <script type="module">
+      import { franc } from 'https://esm.sh/franc@6?bundle';
+    
+      document.addEventListener('DOMContentLoaded', () => {
+        const content = document.getElementById('content');
+        const translateButton = document.getElementById('saveTranslation');
+        const languageDetectedSpan = document.getElementById('languageDetected');
+    
+        translateButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          const detectedLanguage = franc(content.value);
+          console.log('Detected language code:', detectedLanguage);
+    
+          // Update the "languageDetected" span with the detected language
+          languageDetectedSpan.innerHTML = detectedLanguage;
+    
+        });
+      });
+    </script>
     <script>
         function app() {
             return {
@@ -87,7 +106,7 @@
                     localStorage.setItem('apiKey', this.apiKey);
                     localStorage.setItem('model', this.model);
                 },
-                async savePrompt() {
+                async savePrompt(detectedLanguage) {
                     const system_prompt = `
                         You are a helpful translator for a B2B e-commerce platform. Your task is to translate the following text while adhering to the following rules:
                         
