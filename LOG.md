@@ -1,3 +1,13 @@
+## 2406031718
+
+Google Flash breaks because of "Use JSON format with the key "content"".
+If you just use "Return JSON", it works.  
+But then you don't have control over the JSON fields.
+Google Flash needs more guidance.  
+It seems to works for both Haiku and Flash with:  
+
+"Use JSON format in the format { "content": "{{TRANSLATED_TEXT}}" }. Return the unescaped raw JSON, nothing else, don't add Markdown."
+
 ## 2405162152
 
 Turns out that Haiku runs into problems with language detection as soon as there are some words in other languages in it.
