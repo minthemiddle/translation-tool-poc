@@ -1,3 +1,27 @@
+## 2406031742
+
+**Todo: Formatting**
+Formatting might still be an issue:  
+e.g. paragraphs, breaks, lists.
+
+"Compania QSW QUALITÄTS SERVICE WELZBACHER GMBH, este o societate Prestatar de servicii, creată în anul 2009, care își desfășoară activitatea în domeniul Testarea produselor si a materialelor. 
+
+De asemenea, activează în aceeași măsură și în domeniile:
+
+- Quality test, 
+- Reworking,
+- Sorting, 
+- quality control, 
+- Checking, 
+- Industrial service, 
+- Labelling, 
+- Assembly, 
+- Quality service. 
+
+Are sediul în Aschaffenburg, Germania."
+
+This breaks both Haiku (eats formatting) and Flash (does not translate bullet points)
+
 ## 2406031718
 
 Google Flash breaks because of "Use JSON format with the key "content"".
