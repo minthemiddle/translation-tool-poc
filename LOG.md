@@ -1,3 +1,12 @@
+## 2406031749
+
+**Todo: Company name**
+Company name is not passed at all right now.  
+I had issues with the returned JSON in the past once I passed company name as well.
+
+**Todo: Model lists**
+Give options for model names via datalist
+
 ## 2406031742
 
 **Todo: Formatting**
