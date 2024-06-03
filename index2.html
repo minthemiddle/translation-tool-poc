@@ -21,13 +21,14 @@
         
         
     <div class="mt-8">
-            <label for="prompt" class="block text-gray-700 font-bold mb-2">Company description</label>
-            <textarea id="prompt" x-model="company_description" rows="4"
+            <label for="content" class="block text-gray-700 font-bold mb-2">Content (product or company)</label>
+            <textarea id="content" x-model="content" rows="4"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+            <p class="text-gray-500 text-sm">Detected language: <span id="languageDetected"></span></p>
         </div>
         <div class="mt-8">
-            <label for="" class="block text-gray-700 font-bold mb-2">Target Language</label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" list="target_languages" type="text" name=""language_target" id="language_target" x-model="language_target" data>
+            <label for="language_target" class="block text-gray-700 font-bold mb-2">Target Language</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" list="target_languages" type="text" name="language_target" id="language_target" x-model="language_target">
             <datalist id="target_languages">
                 <option value="English">English</option>
                 <option value="Turkish">Turkish</option>
@@ -35,12 +36,12 @@
             </select>
         </div>
         <button @click="savePrompt()"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4" id="saveTranslation">
             Translate
         </button>
         <div class="mt-4">
-            <label for="company_description_translation" class="block text-gray-700 font-bold mb-2">Translated Company Description</label>
-            <textarea id="company_description_translation" x-model="company_description_translation" rows="4"
+            <label for="content_translation" class="block text-gray-700 font-bold mb-2">Translated Content</label>
+            <textarea id="content_translation" x-model="content_translation" rows="4"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
         </div>
         <div class="mt-4">
@@ -95,8 +96,8 @@
                 apiKey: '',
                 model: '',
                 language_target: '',
-                company_description: '',
-                company_description_translation: '',
+                content: '',
+                content_translation: '',
                 response: null,
                 loadFromLocalStorage() {
                     this.apiKey = localStorage.getItem('apiKey') || '';
@@ -119,11 +120,11 @@
                     const user_prompt = `
                       <input>
                         <company_description>
-                        ${this.company_description}
+                        ${this.content}
                         </company_description>
                       </input>
-                        Translate the company description text to ${this.language_target} while following ALL rules above.
-                        Use JSON format with the key "company_description".
+                        Translate the company description text from ${detectedLanguage} (ISO 639-3) to ${this.language_target} while following ALL rules above.
+                        Use JSON format with the key "content".
                     `;
                     console.log(user_prompt);
                     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -142,7 +143,7 @@
                     this.response = await response.json();
                     try {
                         const parsedResponse = JSON.parse(this.response.choices[0].message.content);
-                        this.company_description_translation = parsedResponse.company_description;
+                        this.content_translation = parsedResponse.content;
                     } catch (error) {
                         console.error('Error parsing response:', error);
                     }
