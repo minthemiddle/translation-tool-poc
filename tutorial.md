@@ -1,21 +1,5 @@
 # Comprehensive Guide to the Translation Tool
 
-## Outline
-1. Introduction
-   - Purpose and Promise
-   - Target Audience
-2. High-Level Overview
-   - What is the Translation Tool?
-   - Key Features
-3. Technical Deep Dive
-   - Architecture Overview
-   - Code Walkthrough
-     - HTML Structure
-     - JavaScript Functionality
-4. Conclusion
-   - Key Takeaways
-   - Call to Action
-
 ## 1. Introduction
 
 ### Purpose and Promise
@@ -31,7 +15,7 @@ The Translation Tool is a web-based application that allows users to input text 
 
 ### Key Features
 - **User-Friendly Interface:** Simplifies text input and target language selection.
-- **Automatic Language Detection:** Utilizes the `franc` library for accurate language identification.
+- **Automatic Language Detection:** Utilizes the `franc` Javascript library for accurate language identification.
 - **Local Storage Capabilities:** Saves user preferences for a personalized experience.
 - **Real-Time Translations:** Integrates with a translation API for immediate results.
 
@@ -75,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 ### API Integration
-The application integrates with a translation API to perform real-time translations. The API key and model are stored locally for user convenience.
+The application integrates with a LLM API to perform real-time translations. The API key and model are stored locally for user convenience.
 
 #### Prompt Explanation
 The prompt is a critical component of the translation process. It guides the translation API on how to handle the input text.
