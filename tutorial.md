@@ -45,59 +45,17 @@ The Translation Tool is built using HTML, CSS (via Tailwind CSS), and JavaScript
 #### HTML Structure
 The HTML file (`index.html`) serves as the backbone of the application. It includes essential elements such as text areas for input and output, buttons for actions, and sections for settings.
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💱 Translation Tool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body>
-    <div x-data="app()" x-init="loadFromLocalStorage()" class="max-w-3xl mx-auto p-8">
-        <h1 class="text-2xl font-bold">💱 Translation Tool Demo</h1>
-        <!-- Form and Instructions -->
-        <details class="mt-8 bg-yellow-100 shadow-md rounded-lg p-6 mb-6">
-            <summary class="font-bold text-gray-800">How to fill in the form 📝</summary>
-            <p class="text-gray-600 mt-4">To make your offer findable in all languages, please:</p>
-            <ul class="list-disc pl-6 text-gray-600 mt-4">
-                <li><strong>✍️ Always write full sentences</strong> (instead of just keywords).</li>
-                <li><strong>🔠 Put specific terms</strong> such as product names, brands or technical terms in "quotations".</li>
-                <li><strong>📚 Write out industry norms and abbreviations in full</strong>.</li>
-                <li><strong>🌐 Use just one language</strong> in the input.</li>
-            </ul>
-        </details>
-        <!-- Input and Output Areas -->
-        <div class="mt-8">
-            <label for="content" class="block text-gray-700 font-bold mb-2">Content (product or company)</label>
-            <textarea id="content" x-model="content" rows="8" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-            <p class="text-gray-500 text-sm">Detected language: <span id="languageDetected"></span></p>
-        </div>
-        <div class="mt-8">
-            <label for="language_target" class="block text-gray-700 font-bold mb-2">Target Language</label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" list="target_languages" type="text" name="language_target" id="language_target" x-model="language_target">
-            <datalist id="target_languages">
-                <option value="English">English</option>
-                <option value="Turkish">Turkish</option>
-                <option value="German">German</option>
-            </datalist>
-        </div>
-        <button @click="savePrompt()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4" id="saveTranslation">
-            Translate
-        </button>
-        <div class="mt-4">
-            <label for="content_translation" class="block text-gray-700 font-bold mb-2">Translated Content</label>
-            <textarea id="content_translation" x-model="content_translation" rows="8" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-        </div>
-    </div>
-</body>
-</html>
-```
+Key elements include:
+- **Text Areas**: For inputting the text to be translated and displaying the translated text.
+- **Buttons**: For triggering the translation process.
+- **Settings Section**: For configuring API keys and models.
 
 #### JavaScript Functionality
 The JavaScript code, embedded within the HTML, handles the core functionality of the application, including language detection and API interaction.
+
+Key functionalities include:
+- **Language Detection**: Using the `franc` library to detect the language of the input text. This is crucial for ensuring the translation is accurate and contextually relevant.
+- **Event Handling**: Listening for user actions, such as button clicks, to trigger the translation process.
 
 ```javascript
 document.addEventListener('DOMContentLoaded', () => {
@@ -116,10 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
-The `franc` library is used to detect the language of the input text. The detected language is then displayed to the user, providing immediate feedback.
-
 ### API Integration
 The application integrates with a translation API to perform real-time translations. The API key and model are stored locally for user convenience.
+
+#### Prompt Explanation
+The prompt is a critical component of the translation process. It guides the translation API on how to handle the input text.
+
+- **System Prompt**: Sets the context for the translation, ensuring the output is natural and nuanced. It includes specific rules, such as not translating terms in double quotes and preserving company names.
+- **User Prompt**: Provides the actual text to be translated, specifying the source and target languages. It instructs the API to return the translation in a specific JSON format.
 
 ```javascript
 async savePrompt(detectedLanguage) {
