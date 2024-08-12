@@ -61,11 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
 ### API Integration
 The application integrates with a LLM API to perform real-time translations. The API key and model are stored locally for user convenience.
 
-#### Prompt Explanation
-The prompt is a critical component of the translation process. It guides the translation API on how to handle the input text.
+#### Prompt Explanation for Business Users
+The prompt is a set of instructions that guides the translation tool on how to handle your text. Here’s what each rule means for your business:
 
-- **System Prompt**: Sets the context for the translation, ensuring the output is natural and nuanced. It includes specific rules, such as not translating terms in double quotes and preserving company names.
-- **User Prompt**: Provides the actual text to be translated, specifying the source and target languages. It instructs the API to return the translation in a specific JSON format.
+1. **Natural Sounding Translations**: The tool aims to make translations sound as if they were originally written in the target language, ensuring they are smooth and easy to read.
+2. **Attention to Nuance**: It captures subtle differences in meaning, so the translated text conveys the same message and tone as the original.
+3. **Preserve Quoted Terms**: Any terms you put in double quotes, like product names or technical terms, will remain unchanged in the translation. This ensures brand consistency and accuracy.
+4. **Company Name Consistency**: Your company name will never be translated, maintaining brand identity across languages.
+5. **Use of Double Quotes**: The tool will only use double quotes for quotations, ensuring clarity and uniformity in the translated text.
+
+These rules help maintain the integrity and effectiveness of your business communications across different languages.
 
 ```javascript
 async savePrompt(detectedLanguage) {
